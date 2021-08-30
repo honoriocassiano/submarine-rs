@@ -1,9 +1,8 @@
-use sdl2::render::WindowCanvas;
-
+use crate::renderer::Renderer;
 use crate::sdl_system::SdlSystem;
 
 pub struct Window {
-    canvas: WindowCanvas,
+    renderer: Renderer,
 }
 
 impl Window {
@@ -22,12 +21,17 @@ impl Window {
 
         // TODO Check for more options
         let canvas = sdl_window.into_canvas().build().unwrap(); // TODO Handle this error
+        let renderer = Renderer::new(canvas);
 
-        Ok(Window { canvas })
+        Ok(Window { renderer })
     }
 
-    pub fn canvas(&mut self) -> &mut WindowCanvas {
-        &mut self.canvas
+    pub fn init(&mut self) {
+        self.renderer.init();
+    }
+
+    pub fn update(&mut self) {
+        self.renderer.update();
     }
 }
 

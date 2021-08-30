@@ -1,7 +1,5 @@
 use std::time::Duration;
 
-use sdl2::pixels::Color;
-
 use crate::event_handler::{EventHandler, EventProcessingStatus};
 use crate::sdl_system::SdlSystem;
 use crate::window::Window;
@@ -30,19 +28,9 @@ impl Game {
     }
 
     pub fn run(&mut self) {
-        let canvas = self.window.canvas();
-
-        canvas.set_draw_color(Color::RGB(0, 255, 255));
-        canvas.clear();
-        canvas.present();
-
-        let mut i = 0;
+        self.window.init();
 
         'running: loop {
-            i = (i + 1) % 255;
-            canvas.set_draw_color(Color::RGB(i, 64, 255 - i));
-            canvas.clear();
-
             match self.event_handler.handle_events() {
                 EventProcessingStatus::Continue => {}
                 EventProcessingStatus::Stop => {
@@ -50,7 +38,8 @@ impl Game {
                 }
             }
 
-            canvas.present();
+            self.window.update();
+
             ::std::thread::sleep(Duration::new(0, 1_000_000_000u32 / 60));
         }
     }
