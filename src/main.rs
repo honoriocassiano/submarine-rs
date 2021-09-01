@@ -8,6 +8,7 @@ mod game;
 mod player;
 mod renderable;
 mod renderer;
+mod resources;
 mod sdl_system;
 mod window;
 
