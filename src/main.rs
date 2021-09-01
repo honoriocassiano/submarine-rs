@@ -5,6 +5,7 @@ use crate::game::Game;
 mod element;
 mod event_handler;
 mod game;
+mod renderable;
 mod renderer;
 mod sdl_system;
 mod window;
