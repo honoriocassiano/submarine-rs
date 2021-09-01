@@ -23,7 +23,7 @@ impl Element for Renderer {
         self.canvas.present();
     }
 
-    fn update(&mut self) {
+    fn update(&mut self, _: f32) {
         self.counter = (self.counter + 1) % 255;
 
         self.canvas

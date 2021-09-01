@@ -39,7 +39,8 @@ impl Game {
                 }
             }
 
-            self.window.update();
+            // TODO Add timer
+            self.window.update(0.0f32);
 
             ::std::thread::sleep(Duration::new(0, 1_000_000_000u32 / 60));
         }

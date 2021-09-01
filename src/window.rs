@@ -33,8 +33,8 @@ impl Element for Window {
         self.renderer.init();
     }
 
-    fn update(&mut self) {
-        self.renderer.update();
+    fn update(&mut self, delta_time: f32) {
+        self.renderer.update(delta_time);
     }
 }
 
