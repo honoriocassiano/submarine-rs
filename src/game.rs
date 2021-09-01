@@ -1,5 +1,6 @@
 use std::time::Duration;
 
+use crate::element::Element;
 use crate::event_handler::{EventHandler, EventProcessingStatus};
 use crate::sdl_system::SdlSystem;
 use crate::window::Window;

@@ -1,6 +1,8 @@
 use sdl2::pixels::Color;
 use sdl2::render::WindowCanvas;
 
+use crate::element::Element;
+
 pub struct Renderer {
     canvas: WindowCanvas,
     counter: u8, // TODO Remove this field
@@ -12,14 +14,16 @@ impl Renderer {
 
         Renderer { canvas, counter }
     }
+}
 
-    pub fn init(&mut self) {
+impl Element for Renderer {
+    fn init(&mut self) {
         self.canvas.set_draw_color(Color::RGB(0, 255, 255));
         self.canvas.clear();
         self.canvas.present();
     }
 
-    pub fn update(&mut self) {
+    fn update(&mut self) {
         self.counter = (self.counter + 1) % 255;
 
         self.canvas

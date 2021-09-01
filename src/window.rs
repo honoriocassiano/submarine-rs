@@ -1,3 +1,4 @@
+use crate::element::Element;
 use crate::renderer::Renderer;
 use crate::sdl_system::SdlSystem;
 
@@ -25,12 +26,14 @@ impl Window {
 
         Ok(Window { renderer })
     }
+}
 
-    pub fn init(&mut self) {
+impl Element for Window {
+    fn init(&mut self) {
         self.renderer.init();
     }
 
-    pub fn update(&mut self) {
+    fn update(&mut self) {
         self.renderer.update();
     }
 }

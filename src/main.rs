@@ -2,6 +2,7 @@ extern crate sdl2;
 
 use crate::game::Game;
 
+mod element;
 mod event_handler;
 mod game;
 mod renderer;
