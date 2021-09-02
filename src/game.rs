@@ -2,7 +2,7 @@ use std::time::Duration;
 
 use crate::element::Element;
 use crate::event_handler::{EventHandler, EventProcessingStatus};
-use crate::resources::ResourceManager;
+use crate::player::Player;
 use crate::sdl_system::SdlSystem;
 use crate::tree::Tree;
 use crate::window::Window;
@@ -15,7 +15,6 @@ pub struct Game {
     sdl_system: SdlSystem,
     window: Window,
     event_handler: EventHandler,
-    resource_manager: ResourceManager<'static>,
     tree: Tree,
 }
 
@@ -24,16 +23,24 @@ impl Game {
         let mut sdl_system = SdlSystem::init().unwrap();
         let window = Window::new(&mut sdl_system, NAME, WIDTH, HEIGHT).unwrap();
         let event_handler = EventHandler::new(&sdl_system).unwrap();
-        let resource_manager = ResourceManager::new().unwrap();
-        let tree = Tree::new();
+        let tree = Game::init_tree();
 
         Ok(Game {
             sdl_system,
             window,
             event_handler,
-            resource_manager,
             tree,
         })
+    }
+
+    fn init_tree() -> Tree {
+        let player = Box::new(Player::new());
+
+        let mut tree = Tree::new();
+
+        tree.add_child(player);
+
+        tree
     }
 
     pub fn run(&mut self) {

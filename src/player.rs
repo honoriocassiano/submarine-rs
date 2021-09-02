@@ -1,17 +1,16 @@
-use sdl2::pixels::PixelFormatEnum;
 use sdl2::rect::Rect;
-use sdl2::surface::Surface;
 
+use crate::element::Element;
 use crate::renderable::{RenderData, Renderable};
-use crate::resources::ResourceManager;
+use crate::resources::ResourceLoader;
 
 pub struct Player<'a> {
     render_data: RenderData<'a>,
 }
 
 impl<'a> Player<'a> {
-    pub fn new(resource_manager: &'a mut ResourceManager<'a>) -> Player<'a> {
-        let surface = resource_manager.load_image("assets/images/submarine.png");
+    pub fn new() -> Player<'a> {
+        let surface = ResourceLoader::load_image("assets/images/submarine.png");
         let rect = Rect::new(0, 0, 0, 0);
         let dest_rect = rect;
 
@@ -28,5 +27,15 @@ impl<'a> Player<'a> {
 impl<'a> Renderable<'a> for Player<'a> {
     fn data(&self) -> &RenderData<'a> {
         &self.render_data
+    }
+}
+
+impl<'a> Element for Player<'a> {
+    fn init(&mut self) {
+        todo!()
+    }
+
+    fn update(&mut self, _delta_time: f32) {
+        todo!()
     }
 }

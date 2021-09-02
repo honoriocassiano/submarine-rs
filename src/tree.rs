@@ -1,15 +1,7 @@
-use std::rc::Rc;
-
 use crate::element::Element;
 
-pub trait TreeElement: Element {
-    fn add_child(&mut self, element: Box<dyn TreeElement>);
-
-    fn children(&mut self) -> &mut Vec<Box<dyn TreeElement>>;
-}
-
 pub struct Tree {
-    elements: Vec<Box<dyn TreeElement>>,
+    elements: Vec<Box<dyn Element>>,
 }
 
 impl Tree {
@@ -17,6 +9,14 @@ impl Tree {
         Self {
             elements: Vec::new(),
         }
+    }
+
+    pub fn add_child(&mut self, element: Box<dyn Element>) {
+        self.elements.push(element);
+    }
+
+    pub fn children(&mut self) -> &mut Vec<Box<dyn Element>> {
+        &mut self.elements
     }
 }
 
@@ -31,15 +31,5 @@ impl Element for Tree {
         for e in self.elements.iter_mut() {
             e.update(delta_time);
         }
-    }
-}
-
-impl TreeElement for Tree {
-    fn add_child(&mut self, element: Box<dyn TreeElement>) {
-        self.elements.push(element);
-    }
-
-    fn children(&mut self) -> &mut Vec<Box<dyn TreeElement>> {
-        &mut self.elements
     }
 }
