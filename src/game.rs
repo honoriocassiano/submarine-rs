@@ -2,6 +2,7 @@ use std::time::Duration;
 
 use crate::element::Element;
 use crate::event_handler::{EventHandler, EventProcessingStatus};
+use crate::resources::ResourceManager;
 use crate::sdl_system::SdlSystem;
 use crate::window::Window;
 
@@ -13,6 +14,7 @@ pub struct Game {
     sdl_system: SdlSystem,
     window: Window,
     event_handler: EventHandler,
+    resource_manager: ResourceManager<'static>,
 }
 
 impl Game {
@@ -20,11 +22,13 @@ impl Game {
         let mut sdl_system = SdlSystem::init().unwrap();
         let window = Window::new(&mut sdl_system, NAME, WIDTH, HEIGHT).unwrap();
         let event_handler = EventHandler::new(&sdl_system).unwrap();
+        let resource_manager = ResourceManager::new().unwrap();
 
         Ok(Game {
             sdl_system,
             window,
             event_handler,
+            resource_manager,
         })
     }
 
