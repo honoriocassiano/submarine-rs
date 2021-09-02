@@ -10,6 +10,7 @@ mod renderable;
 mod renderer;
 mod resources;
 mod sdl_system;
+mod tree;
 mod window;
 
 pub fn main() {
