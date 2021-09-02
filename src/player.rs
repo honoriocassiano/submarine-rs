@@ -3,6 +3,7 @@ use sdl2::rect::Rect;
 use crate::element::Element;
 use crate::renderable::{RenderData, Renderable};
 use crate::resources::ResourceLoader;
+use crate::tree::RenderableElement;
 
 pub struct Player {
     render_data: RenderData,
@@ -10,12 +11,12 @@ pub struct Player {
 
 impl Player {
     pub fn new() -> Player {
-        let surface = ResourceLoader::load_image("assets/images/submarine.png");
+        let texture = ResourceLoader::load_image("assets/images/submarine.png");
         let rect = Rect::new(0, 0, 0, 0);
         let dest_rect = rect;
 
         let render_data = RenderData {
-            surface,
+            texture,
             rect,
             dest_rect,
         };

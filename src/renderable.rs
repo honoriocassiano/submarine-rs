@@ -1,8 +1,8 @@
 use sdl2::rect::Rect;
-use sdl2::surface::Surface;
+use sdl2::render::Texture;
 
 pub struct RenderData {
-    pub surface: Surface<'static>,
+    pub texture: Texture<'static>,
     pub rect: Rect,
     pub dest_rect: Rect,
 }
