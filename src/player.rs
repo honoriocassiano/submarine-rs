@@ -4,12 +4,12 @@ use crate::element::Element;
 use crate::renderable::{RenderData, Renderable};
 use crate::resources::ResourceLoader;
 
-pub struct Player<'a> {
-    render_data: RenderData<'a>,
+pub struct Player {
+    render_data: RenderData,
 }
 
-impl<'a> Player<'a> {
-    pub fn new() -> Player<'a> {
+impl Player {
+    pub fn new() -> Player {
         let surface = ResourceLoader::load_image("assets/images/submarine.png");
         let rect = Rect::new(0, 0, 0, 0);
         let dest_rect = rect;
@@ -24,13 +24,13 @@ impl<'a> Player<'a> {
     }
 }
 
-impl<'a> Renderable<'a> for Player<'a> {
-    fn data(&self) -> &RenderData<'a> {
+impl Renderable for Player {
+    fn data(&self) -> &RenderData {
         &self.render_data
     }
 }
 
-impl<'a> Element for Player<'a> {
+impl Element for Player {
     fn init(&mut self) {
         todo!()
     }
