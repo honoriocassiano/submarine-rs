@@ -11,7 +11,7 @@ pub struct Player<'a> {
 
 impl<'a> Player<'a> {
     pub fn new(resource_manager: &'a mut ResourceManager<'a>) -> Player<'a> {
-        let surface = resource_manager.load_image(""); // TODO
+        let surface = resource_manager.load_image("assets/images/submarine.png");
         let rect = Rect::new(0, 0, 0, 0);
         let dest_rect = rect;
 
