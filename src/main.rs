@@ -11,6 +11,8 @@ mod renderer;
 mod resources;
 mod sdl_system;
 mod tree;
+mod vec2;
+mod vector;
 mod window;
 
 pub fn main() {
