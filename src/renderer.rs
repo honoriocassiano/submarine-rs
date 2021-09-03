@@ -1,5 +1,6 @@
 use std::rc::Rc;
 
+use sdl2::pixels::Color;
 use sdl2::render::{Texture, TextureCreator, WindowCanvas};
 use sdl2::surface::Surface;
 use sdl2::video::WindowContext;
@@ -37,11 +38,18 @@ impl Renderer {
     }
 
     pub fn render(&mut self, tree: &Tree) {
+        self.canvas.set_draw_color(Color::RGB(255, 255, 255));
+        self.canvas.clear();
+
         for element in tree.children() {
             let data = element.data();
 
             // TODO Use this value
-            self.canvas.copy(&data.texture, data.rect, data.dest_rect);
+            self.canvas
+                .copy(&data.texture, data.rect, data.dest_rect)
+                .unwrap();
         }
+
+        self.canvas.present();
     }
 }

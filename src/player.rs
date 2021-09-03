@@ -13,7 +13,7 @@ pub struct Player {
 
 impl Player {
     pub fn new(texture: Rc<Texture>) -> Player {
-        let rect = Rect::new(0, 0, 0, 0);
+        let rect = Rect::new(0, 0, 64, 30);
         let dest_rect = rect;
 
         let render_data = RenderData {
