@@ -5,6 +5,7 @@ use crate::game::Game;
 mod element;
 mod event_handler;
 mod game;
+mod movable;
 mod player;
 mod renderable;
 mod renderer;
