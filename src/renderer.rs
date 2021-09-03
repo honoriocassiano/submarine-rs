@@ -1,34 +1,47 @@
-use sdl2::pixels::Color;
-use sdl2::render::WindowCanvas;
+use std::rc::Rc;
 
-use crate::element::Element;
+use sdl2::render::{Texture, TextureCreator, WindowCanvas};
+use sdl2::surface::Surface;
+use sdl2::video::WindowContext;
+
+use crate::tree::Tree;
 
 pub struct Renderer {
     canvas: WindowCanvas,
-    counter: u8, // TODO Remove this field
+    texture_creator: TextureCreator<WindowContext>,
+    textures: Vec<Rc<Texture>>,
 }
 
 impl Renderer {
-    pub fn new(canvas: WindowCanvas) -> Renderer {
-        let counter = 0;
+    pub fn new(canvas: WindowCanvas) -> Self {
+        let texture_creator = canvas.texture_creator();
+        let textures = Vec::new();
 
-        Renderer { canvas, counter }
-    }
-}
-
-impl Element for Renderer {
-    fn init(&mut self) {
-        self.canvas.set_draw_color(Color::RGB(0, 255, 255));
-        self.canvas.clear();
-        self.canvas.present();
+        Self {
+            canvas,
+            texture_creator,
+            textures,
+        }
     }
 
-    fn update(&mut self, _: f32) {
-        self.counter = (self.counter + 1) % 255;
+    pub fn load_texture(&mut self, surface: Surface) -> Rc<Texture> {
+        let texture = Rc::new(
+            self.texture_creator
+                .create_texture_from_surface(&surface)
+                .unwrap(),
+        );
 
-        self.canvas
-            .set_draw_color(Color::RGB(self.counter, 64, 255 - self.counter));
-        self.canvas.clear();
-        self.canvas.present();
+        self.textures.push(texture.clone());
+
+        texture
+    }
+
+    pub fn render(&mut self, tree: &Tree) {
+        for element in tree.children() {
+            let data = element.data();
+
+            // TODO Use this value
+            self.canvas.copy(&data.texture, data.rect, data.dest_rect);
+        }
     }
 }

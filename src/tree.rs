@@ -1,7 +1,10 @@
 use crate::element::Element;
+use crate::renderable::Renderable;
+
+pub trait RenderableElement: Element + Renderable {}
 
 pub struct Tree {
-    elements: Vec<Box<dyn Element>>,
+    elements: Vec<Box<dyn RenderableElement>>,
 }
 
 impl Tree {
@@ -11,11 +14,15 @@ impl Tree {
         }
     }
 
-    pub fn add_child(&mut self, element: Box<dyn Element>) {
+    pub fn add_child(&'_ mut self, element: Box<dyn RenderableElement>) {
         self.elements.push(element);
     }
 
-    pub fn children(&mut self) -> &mut Vec<Box<dyn Element>> {
+    pub fn children(&self) -> &Vec<Box<dyn RenderableElement>> {
+        &self.elements
+    }
+
+    pub fn children_mut(&mut self) -> &mut Vec<Box<dyn RenderableElement>> {
         &mut self.elements
     }
 }

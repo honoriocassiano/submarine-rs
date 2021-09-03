@@ -3,6 +3,8 @@ use std::time::Duration;
 use crate::element::Element;
 use crate::event_handler::{EventHandler, EventProcessingStatus};
 use crate::player::Player;
+use crate::renderer::Renderer;
+use crate::resources::ResourceLoader;
 use crate::sdl_system::SdlSystem;
 use crate::tree::Tree;
 use crate::window::Window;
@@ -19,13 +21,13 @@ pub struct Game {
 }
 
 impl Game {
-    pub fn new() -> Result<Game, String> {
+    pub fn new() -> Result<Self, String> {
         let mut sdl_system = SdlSystem::init().unwrap();
-        let window = Window::new(&mut sdl_system, NAME, WIDTH, HEIGHT).unwrap();
+        let mut window = Window::new(&mut sdl_system, NAME, WIDTH, HEIGHT).unwrap();
         let event_handler = EventHandler::new(&sdl_system).unwrap();
-        let tree = Game::init_tree();
+        let tree = Game::init_tree(&mut window.renderer_mut());
 
-        Ok(Game {
+        Ok(Self {
             sdl_system,
             window,
             event_handler,
@@ -33,8 +35,10 @@ impl Game {
         })
     }
 
-    fn init_tree() -> Tree {
-        let player = Box::new(Player::new());
+    fn init_tree(renderer: &mut Renderer) -> Tree {
+        let surface = ResourceLoader::load_image("assets/images/submarine.png");
+
+        let player = Box::new(Player::new(renderer.load_texture(surface)));
 
         let mut tree = Tree::new();
 
@@ -44,7 +48,6 @@ impl Game {
     }
 
     pub fn run(&mut self) {
-        self.window.init();
         self.tree.init();
 
         'running: loop {
@@ -57,7 +60,7 @@ impl Game {
 
             // TODO Add timer
             self.tree.update(0.0f32);
-            self.window.update(0.0f32);
+            self.window.render(&self.tree);
 
             ::std::thread::sleep(Duration::new(0, 1_000_000_000u32 / 60));
         }

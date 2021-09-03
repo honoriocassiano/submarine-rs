@@ -1,6 +1,6 @@
-use crate::element::Element;
 use crate::renderer::Renderer;
 use crate::sdl_system::SdlSystem;
+use crate::tree::Tree;
 
 pub struct Window {
     renderer: Renderer,
@@ -12,7 +12,7 @@ impl Window {
         title: &str,
         width: u32,
         height: u32,
-    ) -> Result<Window, String> {
+    ) -> Result<Self, String> {
         let sdl_window = sdl_system
             .video()
             .window(title, width, height)
@@ -26,15 +26,17 @@ impl Window {
 
         Ok(Window { renderer })
     }
-}
 
-impl Element for Window {
-    fn init(&mut self) {
-        self.renderer.init();
+    pub fn render(&mut self, tree: &Tree) {
+        self.renderer.render(tree);
     }
 
-    fn update(&mut self, delta_time: f32) {
-        self.renderer.update(delta_time);
+    pub fn renderer(&self) -> &Renderer {
+        &self.renderer
+    }
+
+    pub fn renderer_mut(&mut self) -> &mut Renderer {
+        &mut self.renderer
     }
 }
 

@@ -1,8 +1,10 @@
+use std::rc::Rc;
+
 use sdl2::rect::Rect;
+use sdl2::render::Texture;
 
 use crate::element::Element;
 use crate::renderable::{RenderData, Renderable};
-use crate::resources::ResourceLoader;
 use crate::tree::RenderableElement;
 
 pub struct Player {
@@ -10,8 +12,7 @@ pub struct Player {
 }
 
 impl Player {
-    pub fn new() -> Player {
-        let texture = ResourceLoader::load_image("assets/images/submarine.png");
+    pub fn new(texture: Rc<Texture>) -> Player {
         let rect = Rect::new(0, 0, 0, 0);
         let dest_rect = rect;
 
@@ -32,11 +33,9 @@ impl Renderable for Player {
 }
 
 impl Element for Player {
-    fn init(&mut self) {
-        todo!()
-    }
+    fn init(&mut self) {}
 
-    fn update(&mut self, _delta_time: f32) {
-        todo!()
-    }
+    fn update(&mut self, _delta_time: f32) {}
 }
+
+impl RenderableElement for Player {}
